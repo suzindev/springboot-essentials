@@ -7,6 +7,8 @@ import com.suzintech.springboot.repository.AnimeRepository;
 import com.suzintech.springboot.requests.AnimePostRequestBody;
 import com.suzintech.springboot.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +22,16 @@ public class AnimeService {
 
     private static final AnimeMapper mapper = AnimeMapper.INSTANCE;
 
-    public List<Anime> listAll() {
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable) {
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByName(String name) {
         return animeRepository.findByName(name);
+    }
+
+    public List<Anime> listAllNonPageable() {
+        return animeRepository.findAll();
     }
 
     public Anime findByIdOrThrowBadRequestException(long id) {
