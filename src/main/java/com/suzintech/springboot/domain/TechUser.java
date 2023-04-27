@@ -1,10 +1,5 @@
 package com.suzintech.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +8,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -40,7 +41,7 @@ public class TechUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.stream(authorities.split(","))
                 .map(SimpleGrantedAuthority::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
